@@ -48,7 +48,7 @@ const InvoiceModal = (props) => {
         <div className="pb-4 px-4">
           <Row>
             <Col md={6}>
-             <Button variant="primary" className="d-block w-100" /*  onClick={() => saveInvoice(props)} */ >
+             <Button variant="primary" className="d-block w-100"  onClick={() => saveInvoice(props)}  >
   <BiPaperPlane style={{ width: '15px', height: '15px', marginTop: '-3px' }} className="me-2" />
   Save Invoice
 </Button>
@@ -58,7 +58,7 @@ const InvoiceModal = (props) => {
              <Button
   variant="outline-primary"
   className="d-block w-100 mt-3 mt-md-0"
-  // onClick={GenerateInvoice}
+   onClick={GenerateInvoice}
 >
   <BiCloudDownload style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
   Download Copy
