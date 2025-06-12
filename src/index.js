@@ -1,3 +1,4 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom'; // ✅ React 17 compatible
 import 'bootstrap/dist/css/bootstrap.min.css';
