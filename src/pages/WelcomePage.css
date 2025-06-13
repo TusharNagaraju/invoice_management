@@ -1,0 +1,19 @@
+/* src/pages/WelcomePage.css */
+body {
+  background: linear-gradient(to right, #f8f9fa, #e9efff);
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.custom-heading {
+  font-size: 2.5rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
