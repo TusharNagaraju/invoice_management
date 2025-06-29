@@ -8,13 +8,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 class InvoiceForm extends React.Component {
   constructor(props) {
-    const uniqueId = `INV-${uuidv4().substr(0, 8)}`;
     super(props);
     this.state = {
       isOpen: false,
       currency: '₹',
       currentDate: '',
-      invoiceNumber: uniqueId,
+      invoiceNumber: '',
       dateOfIssue: '',
       billTo: '',
       billToEmail: '',
@@ -149,25 +148,48 @@ class InvoiceForm extends React.Component {
         {window.location.pathname.includes('edit') ? <h1>Edit Invoice</h1> : <h1>Create Invoice</h1>}
 
         <Form onSubmit={this.openModal}>
+          <InvoiceModal
+            showModal={this.state.isOpen}
+            closeModal={this.closeModal}
+            info={this.state}
+            items={this.state.items}
+            currency={this.state.currency}
+            subTotal={this.state.subTotal}
+            taxAmmount={this.state.taxAmmount}
+            discountAmmount={this.state.discountAmmount}
+            total={this.state.total}
+          />
+
           <Row>
-            <Col md={8} lg={9}>
-              <Card className="p-4 p-xl-5 my-3 my-xl-4">
+            <Col xs={12}>
+              <Card className="p-4 p-xl-5 my-3 my-xl-4 w-100">
                 <div className="d-flex flex-row align-items-start justify-content-between mb-3">
                   <div className="d-flex flex-column">
                     <div className="mb-2">
                       <span className="fw-bold">Current&nbsp;Date:&nbsp;</span>
-                      <span className="current-date">{new Date().toLocaleDateString()}</span>
+                      <span className="current-date">{new Date().toLocaleDateString('en-GB')}</span>
                     </div>
                     <div className="d-flex flex-row align-items-center">
                       <span className="fw-bold d-block me-2">Due&nbsp;Date:</span>
                       <Form.Control type="date" value={this.state.dateOfIssue} name="dateOfIssue" onChange={this.editField} style={{ maxWidth: '150px' }} required />
                     </div>
                   </div>
-                  <div className="d-flex flex-row align-items-center">
-                    <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;{this.state.invoiceNumber}</span>
+                  <div className="d-flex flex-column">
+                    <Form.Label className="fw-bold">Invoice Number:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="invoiceNumber"
+                      value={this.state.invoiceNumber}
+                      onChange={this.editField}
+                      placeholder="Enter Invoice Number"
+                      style={{ maxWidth: '200px' }}
+                      required
+                    />
                   </div>
                 </div>
+
                 <hr className="my-4" />
+
                 <Row className="mb-5">
                   <Col>
                     <Form.Label className="fw-bold">Bill to:</Form.Label>
@@ -182,6 +204,7 @@ class InvoiceForm extends React.Component {
                     <Form.Control placeholder="Billing address" value={this.state.billFromAddress} type="text" name="billFromAddress" className="my-2" onChange={this.editField} autoComplete="address" required />
                   </Col>
                 </Row>
+
                 <InvoiceItem
                   onItemizedItemEdit={this.onItemizedItemEdit.bind(this)}
                   onRowAdd={this.handleAddEvent.bind(this)}
@@ -189,6 +212,48 @@ class InvoiceForm extends React.Component {
                   currency={this.state.currency}
                   items={this.state.items}
                 />
+
+                <Row className="mt-4">
+                  <Col md={6}>
+                    <Form.Group>
+                      <Form.Label className="fw-bold">Tax rate:</Form.Label>
+                      <InputGroup className="my-1 flex-nowrap">
+                        <Form.Control
+                          name="taxRate"
+                          type="number"
+                          value={this.state.taxRate}
+                          onChange={this.editField}
+                          className="bg-white border"
+                          placeholder="0.0"
+                          min="0.00"
+                          step="0.01"
+                          max="100.00"
+                        />
+                        <InputGroup.Text className="bg-light fw-bold text-secondary small">%</InputGroup.Text>
+                      </InputGroup>
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group>
+                      <Form.Label className="fw-bold">Discount rate:</Form.Label>
+                      <InputGroup className="my-1 flex-nowrap">
+                        <Form.Control
+                          name="discountRate"
+                          type="number"
+                          value={this.state.discountRate}
+                          onChange={this.editField}
+                          className="bg-white border"
+                          placeholder="0.0"
+                          min="0.00"
+                          step="0.01"
+                          max="100.00"
+                        />
+                        <InputGroup.Text className="bg-light fw-bold text-secondary small">%</InputGroup.Text>
+                      </InputGroup>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
                 <Row className="mt-4 justify-content-end">
                   <Col lg={6}>
                     <div className="d-flex justify-content-between">
@@ -216,46 +281,31 @@ class InvoiceForm extends React.Component {
                     </div>
                   </Col>
                 </Row>
+
                 <hr className="my-4" />
                 <Form.Label className="fw-bold">Notes:</Form.Label>
-                <Form.Control placeholder="Thanks for your business!" name="notes" value={this.state.notes} onChange={this.editField} as="textarea" className="my-2" rows={1} />
-              </Card>
-            </Col>
-            <Col md={4} lg={3}>
-              <div className="sticky-top pt-md-3 pt-xl-4">
-                <Button variant="primary" type="submit" className="d-block w-100 mb-2">Review Invoice</Button>
-                <Link to="/">
-                  <Button variant="danger" className="d-block w-100">Cancel & Back Home</Button>
-                </Link>
-
-                <InvoiceModal
-                  showModal={this.state.isOpen}
-                  closeModal={this.closeModal}
-                  info={this.state}
-                  items={this.state.items}
-                  currency={this.state.currency}
-                  subTotal={this.state.subTotal}
-                  taxAmmount={this.state.taxAmmount}
-                  discountAmmount={this.state.discountAmmount}
-                  total={this.state.total}
+                <Form.Control
+                  placeholder="Thanks for your business!"
+                  name="notes"
+                  value={this.state.notes}
+                  onChange={this.editField}
+                  as="textarea"
+                  className="my-2"
+                  rows={1}
                 />
 
-                <Form.Group className="my-3">
-                  <Form.Label className="fw-bold">Tax rate:</Form.Label>
-                  <InputGroup className="my-1 flex-nowrap">
-                    <Form.Control name="taxRate" type="number" value={this.state.taxRate} onChange={this.editField} className="bg-white border" placeholder="0.0" min="0.00" step="0.01" max="100.00" />
-                    <InputGroup.Text className="bg-light fw-bold text-secondary small">%</InputGroup.Text>
-                  </InputGroup>
-                </Form.Group>
+                <Row className="mt-4">
+                  <Col md={6}>
+                    <Link to="/">
+                      <Button variant="danger" className="w-100">Cancel & Back Home</Button>
+                    </Link>
+                  </Col>
+                  <Col md={6}>
+                    <Button variant="primary" type="submit" className="w-100">Review Invoice</Button>
+                  </Col>
+                </Row>
 
-                <Form.Group className="my-3">
-                  <Form.Label className="fw-bold">Discount rate:</Form.Label>
-                  <InputGroup className="my-1 flex-nowrap">
-                    <Form.Control name="discountRate" type="number" value={this.state.discountRate} onChange={this.editField} className="bg-white border" placeholder="0.0" min="0.00" step="0.01" max="100.00" />
-                    <InputGroup.Text className="bg-light fw-bold text-secondary small">%</InputGroup.Text>
-                  </InputGroup>
-                </Form.Group>
-              </div>
+              </Card>
             </Col>
           </Row>
         </Form>
