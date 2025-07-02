@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 const invoiceSlice = createSlice({
   name: 'invoices',
   initialState: [],
   reducers: {
     addInvoice: (state, action) => {
-      return [...state, action.payload]
+      return [...state, action.payload];
     },
     editInvoice: (state, action) => {
       const { id } = action.payload;
@@ -27,8 +28,17 @@ const invoiceSlice = createSlice({
       }
       return [...state, invoice];
     },
+    updateStatus: (state, action) => {
+      const { id, status } = action.payload;
+      const index = state.findIndex((invoice) => invoice.id === id);
+      if (index !== -1) {
+        state[index].info.status = status;
+      }
+    }
   },
 });
 
-export const { addInvoice, editInvoice, deleteInvoice, copyInvoice } = invoiceSlice.actions;
+export const { addInvoice, editInvoice, deleteInvoice, copyInvoice, updateStatus } = invoiceSlice.actions;
 export default invoiceSlice.reducer;
+
+

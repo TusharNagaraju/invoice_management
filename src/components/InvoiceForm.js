@@ -297,7 +297,7 @@ class InvoiceForm extends React.Component {
                 <Row className="mt-4">
                   <Col md={6}>
                     <Link to="/">
-                      <Button variant="danger" className="w-100">Cancel & Back Home</Button>
+                      <Button variant="secondary" className="w-100">Cancel & Back Home</Button>
                     </Link>
                   </Col>
                   <Col md={6}>

@@ -9,7 +9,7 @@ const WelcomePage = () => {
     <div className="container-fluid min-vh-100 d-flex flex-column bg-light">
       {/* Header */}
       <header className="d-flex justify-content-start align-items-center py-4 px-5">
-        <h1 className="fs-4 fw-bold text-primary mb-0">
+        <h1 className="fs-4 fw-bold text-secondary mb-0">
           <i className="bi bi-bookmark-fill me-2"></i> Invoify
         </h1>
       </header>
@@ -39,10 +39,10 @@ const WelcomePage = () => {
           >
             <path
               d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
-              fill="#0d6efd"
+              fill="#0dfd9d"
               opacity="0.3"
             />
-            <rect x="50" y="100" rx="15" ry="15" width="400" height="250" fill="#0d6efd" />
+            <rect x="50" y="100" rx="15" ry="15" width="400" height="250" fill="#0dfd9d" />
             <rect x="90" y="140" rx="10" ry="10" width="320" height="30" fill="#fff" />
             <rect x="90" y="180" rx="10" ry="10" width="260" height="30" fill="#fff" opacity="0.9" />
             <rect x="90" y="220" rx="10" ry="10" width="180" height="30" fill="#fff" opacity="0.9" />

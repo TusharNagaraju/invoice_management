@@ -95,7 +95,7 @@ function ItemRow(props) {
         <BiTrash
           onClick={onDelEventClick}
           style={{ height: '33px', width: '33px', padding: '7.5px' }}
-          className="text-white mt-1 btn btn-danger"
+          className="text-white mt-1 btn btn-secondary"
         />
       </td>
     </tr>

@@ -1,11 +1,11 @@
 import React from 'react';
-import {Row, Col,Button,Modal} from "react-bootstrap"
+import { Row, Col, Button, Modal } from "react-bootstrap"
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
-import {addInvoice,editInvoice} from "../features/invoiceSlice"
+import { addInvoice, editInvoice } from "../features/invoiceSlice"
 import ShowInvoiceDetails from './ShowInvoiceDetails';
 
 function GenerateInvoice() {
@@ -17,7 +17,7 @@ function GenerateInvoice() {
       format: [612, 792]
     });
     pdf.internal.scaleFactor = 1;
-    const imgProps= pdf.getImageProperties(imgData);
+    const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
@@ -32,10 +32,10 @@ const InvoiceModal = (props) => {
 
   const saveInvoice = (invoice) => {
     const { closeModal, ...newInvoice } = invoice;
-    const invoiceData = {id:newInvoice.info.invoiceNumber,...newInvoice}
-    if(window.location.pathname.includes('edit')){
+    const invoiceData = { id: newInvoice.info.invoiceNumber, ...newInvoice }
+    if (window.location.pathname.includes('edit')) {
       dispatch(editInvoice(invoiceData))
-    }else{
+    } else {
       dispatch(addInvoice(invoiceData))
     }
     navigate("/")
@@ -48,21 +48,21 @@ const InvoiceModal = (props) => {
         <div className="pb-4 px-4">
           <Row>
             <Col md={6}>
-             <Button variant="primary" className="d-block w-100"  onClick={() => saveInvoice(props)}  >
-  <BiPaperPlane style={{ width: '15px', height: '15px', marginTop: '-3px' }} className="me-2" />
-  Save Invoice
-</Button>
+              <Button variant="primary" className="d-block w-100" onClick={() => saveInvoice(props)}  >
+                <BiPaperPlane style={{ width: '15px', height: '15px', marginTop: '-3px' }} className="me-2" />
+                Save Invoice
+              </Button>
 
             </Col>
             <Col md={6}>
-             <Button
-  variant="outline-primary"
-  className="d-block w-100 mt-3 mt-md-0"
-   onClick={GenerateInvoice}
->
-  <BiCloudDownload style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
-  Download Copy
-</Button>
+              <Button
+                variant="outline-secondary"
+                className="d-block w-100 mt-3 mt-md-0"
+                onClick={GenerateInvoice}
+              >
+                <BiCloudDownload style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
+                Download Copy
+              </Button>
 
 
             </Col>
